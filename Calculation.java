@@ -19,6 +19,10 @@ public class Calculation {
     public String folloAction6 = "ознакомление с материалами уголовного дела ";
     public String folloAction7 = "очная ставка";
     public String folloAction8 = " проверка показаний на месте";
+    public String folloAction9 = " составление протокола задержания  ";
+    public String folloAction10 = " рассмотрение ходатайство следователя об избрании меры пресечения";
+    public String folloAction11 = " рассмотрение ходатайство следователя о продлении срока содержания под стражей";
+
     public String folloAction;
     public int total;
     public int getTotal() {
@@ -30,15 +34,18 @@ public class Calculation {
         String all = "";
 
         while (true) {
-            System.out.println("Введите год");
-            int year = new Scanner(System.in).nextInt();
-            if (year == 0000) {
+            System.out.println("Введите дату");
+            String date  = new Scanner(System.in).nextLine();
+            if (date.startsWith("000")) {
                 return all;}
             count++;
-            System.out.println("Введите месяц");
-            int month = new Scanner(System.in).nextInt();
-            System.out.println("Введите день");
-            int day = new Scanner(System.in).nextInt();
+            String [] arrayDate=date.split("");
+            String yearSt="20"+arrayDate[4]+arrayDate[5];
+            int year = Integer.parseInt(yearSt);
+            String monthSt=arrayDate[2]+arrayDate[3];
+            int month = Integer.parseInt(monthSt);
+            String daySt=arrayDate[0]+arrayDate[1];
+            int day = Integer.parseInt(daySt);
             System.out.println("Вид следственного действия");
             int investigAtive = new Scanner(System.in).nextInt();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -55,6 +62,9 @@ public class Calculation {
                 case 6 -> folloAction = folloAction6;
                 case 7 -> folloAction = folloAction7;
                 case 8 -> folloAction = folloAction8;
+                case 9 -> folloAction = folloAction9;
+                case 10 ->folloAction = folloAction10;
+                case 11 ->folloAction = folloAction11;
             }
             if (sd.contains("суббота") || sd.contains("воскресенье")) {
                 a = 3027;// 3027 пункт б
@@ -70,15 +80,18 @@ public class Calculation {
         String all = "";
 
         while (true) {
-            System.out.println("Введите год");
-            int year = new Scanner(System.in).nextInt();
-            if (year == 0000) {
+            System.out.println("Введите дату");
+            String date  = new Scanner(System.in).nextLine();
+            if (date.startsWith("000")) {
                 return all;}
             count++;
-            System.out.println("Введите месяц");
-            int month = new Scanner(System.in).nextInt();
-            System.out.println("Введите день");
-            int day = new Scanner(System.in).nextInt();
+            String [] arrayDate=date.split("");
+            String yearSt="20"+arrayDate[4]+arrayDate[5];
+            int year = Integer.parseInt(yearSt);
+            String monthSt=arrayDate[2]+arrayDate[3];
+            int month = Integer.parseInt(monthSt);
+            String daySt=arrayDate[0]+arrayDate[1];
+            int day = Integer.parseInt(daySt);
             System.out.println("Вид следственного действия");
             int investigAtive = new Scanner(System.in).nextInt();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -95,6 +108,9 @@ public class Calculation {
                 case 6 -> folloAction = folloAction6;
                 case 7 -> folloAction = folloAction7;
                 case 8 -> folloAction = folloAction8;
+                case 9 -> folloAction = folloAction9;
+                case 10 ->folloAction = folloAction10;
+                case 11 ->folloAction = folloAction11;
             }
             if (sd.contains("суббота") || sd.contains("воскресенье")) {
                 a = 2132;// 3027 пункт б

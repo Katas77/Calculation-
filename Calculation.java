@@ -1,10 +1,13 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Calculation {
+    List<Payment> paymentList = new ArrayList<>();
+
     int count = 0;
+    public String folloAction;
+    public int total;
 
     public int getCount() {
         return count;
@@ -22,37 +25,30 @@ public class Calculation {
     public String folloAction9 = " составление протокола задержания  ";
     public String folloAction10 = " рассмотрение ходатайство следователя об избрании меры пресечения";
     public String folloAction11 = " рассмотрение ходатайство следователя о продлении срока содержания под стражей";
+    public String folloAction12 = " изъятия предметов, имеющих значение для уголовного дела, выемка. ";
 
-    public String folloAction;
-    public int total;
+
     public int getTotal() {
         return total;
     }
 
     public String resultB() {
-        int a = 2008;
-        String all = "";
-
         while (true) {
             System.out.println("Введите дату");
-            String date  = new Scanner(System.in).nextLine();
+            String date = new Scanner(System.in).nextLine();
             if (date.startsWith("000")) {
-                return all;}
+                return alla();
+            }
             count++;
-            String [] arrayDate=date.split("");
-            String yearSt="20"+arrayDate[4]+arrayDate[5];
+            String[] arrayDate = date.split("");
+            String yearSt = "20" + arrayDate[4] + arrayDate[5];
             int year = Integer.parseInt(yearSt);
-            String monthSt=arrayDate[2]+arrayDate[3];
+            String monthSt = arrayDate[2] + arrayDate[3];
             int month = Integer.parseInt(monthSt);
-            String daySt=arrayDate[0]+arrayDate[1];
+            String daySt = arrayDate[0] + arrayDate[1];
             int day = Integer.parseInt(daySt);
             System.out.println("Вид следственного действия");
             int investigAtive = new Scanner(System.in).nextInt();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
-            formatter2.format(LocalDate.of(year, month, day).getDayOfWeek());
-            String dayER = formatter.format(LocalDate.of(year, month, day));
-            String sd = formatter2.format(LocalDate.of(year, month, day).getDayOfWeek());
             switch (investigAtive) {
                 case 1 -> folloAction = folloAction1;
                 case 2 -> folloAction = folloAction2;
@@ -63,42 +59,54 @@ public class Calculation {
                 case 7 -> folloAction = folloAction7;
                 case 8 -> folloAction = folloAction8;
                 case 9 -> folloAction = folloAction9;
-                case 10 ->folloAction = folloAction10;
-                case 11 ->folloAction = folloAction11;
+                case 10 -> folloAction = folloAction10;
+                case 11 -> folloAction = folloAction11;
+                case 12 -> folloAction = folloAction12;
             }
-            if (sd.contains("суббота") || sd.contains("воскресенье")) {
-                a = 3027;// 3027 пункт б
-            }
-            else a = 2008;
-            total = total + a;
-            all = all + dayER + " - " + sd + " - " + folloAction + "  " + a + "  руб." + System.lineSeparator();
-        }
+            Payment payment = new Payment(folloAction, LocalDate.of(year, month, day));
+            paymentList.add(payment);
 
+
+        }
     }
-    public String resultG() {
-        int a = 1560;
-        String all = "";
 
+    String alla() {
+        String all = "";
+        int a = 2118;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
+        Collections.sort(paymentList, Comparator.comparing(Payment::getDate));
+        for (Payment payment : paymentList) {
+            String dayER = formatter.format(payment.getDate());
+            String sd = formatter2.format(payment.getDate().getDayOfWeek());
+            if (sd.contains("суббота") || sd.contains("воскресенье")) {
+                a = 3193;// 3193 пункт б
+            } else a = 2118;
+            total = total + a;
+            all = all + dayER + " - " + sd + " - " + payment.getAction()+ "  " + a + "  руб." + System.lineSeparator();
+        }
+
+        return all;
+    }
+
+
+    public String resultG() {
         while (true) {
             System.out.println("Введите дату");
-            String date  = new Scanner(System.in).nextLine();
+            String date = new Scanner(System.in).nextLine();
             if (date.startsWith("000")) {
-                return all;}
+                return alla2();
+            }
             count++;
-            String [] arrayDate=date.split("");
-            String yearSt="20"+arrayDate[4]+arrayDate[5];
+            String[] arrayDate = date.split("");
+            String yearSt = "20" + arrayDate[4] + arrayDate[5];
             int year = Integer.parseInt(yearSt);
-            String monthSt=arrayDate[2]+arrayDate[3];
+            String monthSt = arrayDate[2] + arrayDate[3];
             int month = Integer.parseInt(monthSt);
-            String daySt=arrayDate[0]+arrayDate[1];
+            String daySt = arrayDate[0] + arrayDate[1];
             int day = Integer.parseInt(daySt);
             System.out.println("Вид следственного действия");
             int investigAtive = new Scanner(System.in).nextInt();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
-            formatter2.format(LocalDate.of(year, month, day).getDayOfWeek());
-            String dayER = formatter.format(LocalDate.of(year, month, day));
-            String sd = formatter2.format(LocalDate.of(year, month, day).getDayOfWeek());
             switch (investigAtive) {
                 case 1 -> folloAction = folloAction1;
                 case 2 -> folloAction = folloAction2;
@@ -109,17 +117,34 @@ public class Calculation {
                 case 7 -> folloAction = folloAction7;
                 case 8 -> folloAction = folloAction8;
                 case 9 -> folloAction = folloAction9;
-                case 10 ->folloAction = folloAction10;
-                case 11 ->folloAction = folloAction11;
+                case 10 -> folloAction = folloAction10;
+                case 11 -> folloAction = folloAction11;
+                case 12 -> folloAction = folloAction12;
             }
+            Payment payment = new Payment(folloAction, LocalDate.of(year, month, day));
+            paymentList.add(payment);
+
+
+        }
+    }
+
+    String alla2() {
+        String all = "";
+        int a = 1646;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
+        Collections.sort(paymentList, Comparator.comparing(Payment::getDate));
+        for (Payment payment : paymentList) {
+            String dayER = formatter.format(payment.getDate());
+            String sd = formatter2.format(payment.getDate().getDayOfWeek());
             if (sd.contains("суббота") || sd.contains("воскресенье")) {
-                a = 2132;// 3027 пункт б
-            }
-            else a = 1560;
+                a = 2249;// 2249 пункт г
+            } else a = 1646;
             total = total + a;
-            all = all + dayER + " - " + sd + " - " + folloAction + "  " + a + "  руб." + System.lineSeparator();
+            all = all + dayER + " - " + sd + " - " + payment.getAction()+ "  " + a + "  руб." + System.lineSeparator();
         }
 
+        return all;
     }
 
 }

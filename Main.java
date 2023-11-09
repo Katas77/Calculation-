@@ -15,7 +15,7 @@ public class Main {
                     сalculation.resultG());}
 
         System.out.println("Количество дней " + сalculation.getCount());
-        System.out.println("Итого к выплате подлежит сумма  - " + сalculation.getTotal() + " руб, которую прошу перечислить на банковские реквизиты:");
+        System.out.println("Итого к выплате подлежит сумма  - " + сalculation.getTotal() + " руб., которую прошу перечислить на банковские реквизиты:");
     }
 
 }

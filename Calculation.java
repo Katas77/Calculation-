@@ -3,29 +3,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Calculation {
-    List<Payment> paymentList = new ArrayList<>();
-
-    int count = 0;
-    public String folloAction;
+    List<PaymentDay> paymentList = new ArrayList<>();
+    public int count = 0;
+    public String followupAction;
     public int total;
 
     public int getCount() {
         return count;
     }
 
-    // 2008 руб пункт б, 1560 руб п.г
-    String folloAction1 = "допрос подозреваемого ";
-    String folloAction2 = "допрос обвиняемого";
-    String folloAction3 = "предъявление постановления о назначении экспертизы  ";
-    String folloAction4 = "предъявление заключения эксперта ";
-    public String folloAction5 = "уведомление об окончании следственных действий ";
-    public String folloAction6 = "ознакомление с материалами уголовного дела ";
-    public String folloAction7 = "очная ставка";
-    public String folloAction8 = " проверка показаний на месте";
-    public String folloAction9 = " составление протокола задержания  ";
-    public String folloAction10 = " рассмотрение ходатайство следователя об избрании меры пресечения";
-    public String folloAction11 = " рассмотрение ходатайство следователя о продлении срока содержания под стражей";
-    public String folloAction12 = " изъятия предметов, имеющих значение для уголовного дела, выемка. ";
+    public String followupAction1 = "допрос подозреваемого ";
+    public String followupAction2 = "допрос обвиняемого";
+    public String followupAction3 = "предъявление постановления о назначении экспертизы  ";
+    public String followupAction4 = "предъявление заключения эксперта ";
+    public String followupAction5 = "уведомление об окончании следственных действий ";
+    public String followupAction6 = "ознакомление с материалами уголовного дела ";
+    public String followupAction7 = "очная ставка";
+    public String followupAction8 = " проверка показаний на месте";
+    public String followupAction9 = " составление протокола задержания  ";
+    public String followupAction10 = " рассмотрение ходатайство следователя об избрании меры пресечения";
+    public String followupAction11 = " рассмотрение ходатайство следователя о продлении срока содержания под стражей";
+    public String followupAction12 = " изъятия предметов, имеющих значение для уголовного дела, выемка. ";
 
 
     public int getTotal() {
@@ -36,7 +34,7 @@ public class Calculation {
         while (true) {
             System.out.println("Введите дату в формате ДДММГГ");
             String date = new Scanner(System.in).nextLine();
-            if (date.startsWith("000")) {
+            if (date.startsWith("00")) {
                 return alla();
             }
             count++;
@@ -50,20 +48,20 @@ public class Calculation {
             System.out.println("Вид следственного действия");
             int investigAtive = new Scanner(System.in).nextInt();
             switch (investigAtive) {
-                case 1 -> folloAction = folloAction1;
-                case 2 -> folloAction = folloAction2;
-                case 3 -> folloAction = folloAction3;
-                case 4 -> folloAction = folloAction4;
-                case 5 -> folloAction = folloAction5;
-                case 6 -> folloAction = folloAction6;
-                case 7 -> folloAction = folloAction7;
-                case 8 -> folloAction = folloAction8;
-                case 9 -> folloAction = folloAction9;
-                case 10 -> folloAction = folloAction10;
-                case 11 -> folloAction = folloAction11;
-                case 12 -> folloAction = folloAction12;
+                case 1 -> followupAction = followupAction1;
+                case 2 -> followupAction = followupAction2;
+                case 3 -> followupAction = followupAction3;
+                case 4 -> followupAction = followupAction4;
+                case 5 -> followupAction = followupAction5;
+                case 6 -> followupAction = followupAction6;
+                case 7 -> followupAction = followupAction7;
+                case 8 -> followupAction = followupAction8;
+                case 9 -> followupAction = followupAction9;
+                case 10 -> followupAction = followupAction10;
+                case 11 -> followupAction = followupAction11;
+                case 12 -> followupAction = followupAction12;
             }
-            Payment payment = new Payment(folloAction, LocalDate.of(year, month, day));
+            PaymentDay payment = new PaymentDay(followupAction, LocalDate.of(year, month, day));
             paymentList.add(payment);
 
 
@@ -75,15 +73,15 @@ public class Calculation {
         int a = 2118;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
-        Collections.sort(paymentList, Comparator.comparing(Payment::getDate));
-        for (Payment payment : paymentList) {
+        paymentList.sort(Comparator.comparing(PaymentDay::getDate));
+        for (PaymentDay payment : paymentList) {
             String dayER = formatter.format(payment.getDate());
             String sd = formatter2.format(payment.getDate().getDayOfWeek());
             if (sd.contains("суббота") || sd.contains("воскресенье")) {
                 a = 3193;// 3193 пункт б
             } else a = 2118;
             total = total + a;
-            all = all + dayER + " - " + sd + " - " + payment.getAction()+ "  " + a + "  руб." + System.lineSeparator();
+            all = all + dayER + " - " + sd + " - " + payment.getAction() + "  " + a + "  руб." + System.lineSeparator();
         }
 
         return all;
@@ -94,9 +92,11 @@ public class Calculation {
         while (true) {
             System.out.println("Введите дату в формате ДДММГГ");
             String date = new Scanner(System.in).nextLine();
-            if (date.startsWith("000")) {
+            if (date.startsWith("00")) {
                 return alla2();
             }
+            if (date.length()!=6)
+            {resultG();}
             count++;
             String[] arrayDate = date.split("");
             String yearSt = "20" + arrayDate[4] + arrayDate[5];
@@ -106,22 +106,22 @@ public class Calculation {
             String daySt = arrayDate[0] + arrayDate[1];
             int day = Integer.parseInt(daySt);
             System.out.println("Вид следственного действия");
-            int investigAtive = new Scanner(System.in).nextInt();
-            switch (investigAtive) {
-                case 1 -> folloAction = folloAction1;
-                case 2 -> folloAction = folloAction2;
-                case 3 -> folloAction = folloAction3;
-                case 4 -> folloAction = folloAction4;
-                case 5 -> folloAction = folloAction5;
-                case 6 -> folloAction = folloAction6;
-                case 7 -> folloAction = folloAction7;
-                case 8 -> folloAction = folloAction8;
-                case 9 -> folloAction = folloAction9;
-                case 10 -> folloAction = folloAction10;
-                case 11 -> folloAction = folloAction11;
-                case 12 -> folloAction = folloAction12;
+            int active = new Scanner(System.in).nextInt();
+            switch (active) {
+                case 1 -> followupAction = followupAction1;
+                case 2 -> followupAction = followupAction2;
+                case 3 -> followupAction = followupAction3;
+                case 4 -> followupAction = followupAction4;
+                case 5 -> followupAction = followupAction5;
+                case 6 -> followupAction = followupAction6;
+                case 7 -> followupAction = followupAction7;
+                case 8 -> followupAction = followupAction8;
+                case 9 -> followupAction = followupAction9;
+                case 10 -> followupAction = followupAction10;
+                case 11 -> followupAction = followupAction11;
+                case 12 -> followupAction = followupAction12;
             }
-            Payment payment = new Payment(folloAction, LocalDate.of(year, month, day));
+            PaymentDay payment = new PaymentDay(followupAction, LocalDate.of(year, month, day));
             paymentList.add(payment);
 
 
@@ -133,15 +133,15 @@ public class Calculation {
         int a = 1646;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE").localizedBy(new Locale("ru"));
-        Collections.sort(paymentList, Comparator.comparing(Payment::getDate));
-        for (Payment payment : paymentList) {
+        paymentList.sort(Comparator.comparing(PaymentDay::getDate));
+        for (PaymentDay payment : paymentList) {
             String dayER = formatter.format(payment.getDate());
             String sd = formatter2.format(payment.getDate().getDayOfWeek());
             if (sd.contains("суббота") || sd.contains("воскресенье")) {
                 a = 2249;// 2249 пункт г
             } else a = 1646;
             total = total + a;
-            all = all + dayER + " - " + sd + " - " + payment.getAction()+ "  " + a + "  руб." + System.lineSeparator();
+            all = all + dayER + " - " + sd + " - " + payment.getAction() + "  " + a + "  руб." + System.lineSeparator();
         }
 
         return all;

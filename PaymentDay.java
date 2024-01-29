@@ -1,11 +1,11 @@
 import java.time.LocalDate;
 
-public class Payment {
+public class PaymentDay {
 
     String action;
     LocalDate date;
 
-    public Payment(String action, LocalDate date) {
+    public PaymentDay(String action, LocalDate date) {
         this.action = action;
         this.date = date;
     }
@@ -18,11 +18,4 @@ public class Payment {
         return date;
     }
 
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 }
